@@ -20,6 +20,7 @@ const Dashboard = () => {
       <div className="mt-8 space-y-4 px-4 md:px-20 lg:px-32">
         {tools.map((tool, index) => (
           <Card
+            onClick={() => router.push(tool.href)}
             key={index}
             className="p-4 flex items-center justify-between border-black/5 cursor-pointer hover:shadow-lg transition"
           >
@@ -29,7 +30,7 @@ const Dashboard = () => {
               </div>
               <div className="font-semibold">{tool.label}</div>
             </div>
-            <ArrowRight onClick={() => router.push(tool.href)} />
+            <ArrowRight />
           </Card>
         ))}
       </div>
