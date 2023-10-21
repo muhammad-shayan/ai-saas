@@ -1,3 +1,4 @@
+import { IncreaseCount, checkApiLimitCount } from "@/lib/api-limit";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import { Configuration, OpenAIApi } from "openai";
@@ -28,11 +29,17 @@ export async function POST(req: Request) {
     if (!resolution) {
       return new NextResponse("Resolution is required", { status: 400 });
     }
+    const limit = await checkApiLimitCount();
+
+    if (!limit) {
+      return new NextResponse("Free API limits exceeded", { status: 403 });
+    }
     const response = await openai.createImage({
       prompt,
       n: parseInt(amount, 10),
       size: resolution,
     });
+    await IncreaseCount();
     return NextResponse.json(response.data.data);
   } catch (error) {
     console.log("[CONVERSATION_ERROR]: ", error);

@@ -13,9 +13,11 @@ import { useState } from "react";
 import axios from "axios";
 import Empty from "@/components/Empty";
 import Loader from "@/components/Loader";
+import { useProModal } from "@/hooks/useProModal";
 
 const Audio = () => {
   const router = useRouter();
+  const proModal = useProModal();
   const [music, setMusic] = useState<string>("");
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -33,7 +35,8 @@ const Audio = () => {
       const response = await axios.post("/api/music", values);
       setMusic(response.data.audio);
       form.reset();
-    } catch (error) {
+    } catch (error: any) {
+      if (error?.response?.status === 403) proModal.onOpen();
       console.log(error);
     } finally {
       router.refresh();
