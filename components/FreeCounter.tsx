@@ -1,5 +1,5 @@
 import { Card, CardContent } from "./ui/card";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { MAX_FREE_COUNTS } from "@/constants";
 import { Progress } from "./ui/progress";
 import { Button } from "./ui/button";
@@ -11,6 +11,16 @@ interface FreeCounterProps {
 }
 const FreeCounter = ({ apiLimitCount }: FreeCounterProps) => {
   const proModal = useProModal();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
   return (
     <Card className="bg-white/10 border-0">
       <CardContent className="py-4">
