@@ -74,7 +74,7 @@ const Sidebar = ({ apiLimitCount, isPro }: SidebarProps) => {
     <>
       <div className="w-full h-full flex flex-col justify-between py-4 bg-[#111827] text-white">
         <div className="px-3 py-2">
-          <Link href="/dashboard" className="flex px-3 mb-14 items-center">
+          <Link href="/" className="flex px-3 mb-14 items-center">
             <Image src="/logo.png" alt="Logo" width={30} height={30} />
             <h1 className={cn("ml-4 text-2xl font-bold", montserrat.className)}>
               Genius

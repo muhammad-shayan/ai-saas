@@ -23,7 +23,6 @@ export async function POST(request: Request) {
   }
 
   const session = event.data.object as Stripe.Checkout.Session;
-  // let userId;
 
   if (event.type === "checkout.session.completed") {
     const subscription = await stripe.subscriptions.retrieve(
@@ -33,9 +32,6 @@ export async function POST(request: Request) {
     if (!session?.metadata?.userId) {
       return new NextResponse("User id is required", { status: 400 });
     }
-
-    // userId = session.metadata.userId;
-    // console.log(userId);
 
     await prismadb.userSubscription.create({
       data: {
@@ -76,17 +72,20 @@ export async function POST(request: Request) {
     }
   }
   // if (event.type === "customer.subscription.updated") {
-
+  //   console.log("-----event------");
+  //   console.log(event);
+  //   console.log("-----session--------");
+  //   console.log(session);
   //   if (event.data.object.canceled_at) {
   //     const userSubscribed = await prismadb.userSubscription.findUnique({
   //       where: {
-  //         userId,
+  //         stripeCustomerId:session.customer,
   //       },
   //     });
   //     if (userSubscribed) {
   //       await prismadb.userSubscription.delete({
   //         where: {
-  //           userId,
+  //           stripeCustomerId:session.customer,
   //         },
   //       });
   //     }

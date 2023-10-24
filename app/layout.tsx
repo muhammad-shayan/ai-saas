@@ -3,6 +3,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import ModalProvider from "@/components/ModalProvider";
+import CrispProvider from "@/components/CrispProvider";
+import ToasterProvider from "@/components/ToasterProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +21,12 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
+        <head>
+          <link rel="icon" href="/logo.png" />
+        </head>
+        <CrispProvider />
         <body className={inter.className}>
+          <ToasterProvider />
           <ModalProvider />
           {children}
         </body>

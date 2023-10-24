@@ -23,6 +23,7 @@ import {
 import { Card, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
 import { useProModal } from "@/hooks/useProModal";
+import { toast } from "react-hot-toast";
 
 const ImageGen = () => {
   const router = useRouter();
@@ -48,7 +49,11 @@ const ImageGen = () => {
       setImages(urls);
       form.reset();
     } catch (error: any) {
-      if (error?.response?.status === 403) proModal.onOpen();
+      if (error?.response?.status === 403) {
+        proModal.onOpen();
+      } else {
+        toast.error("something went wrong");
+      }
       console.log(error);
     } finally {
       router.refresh();
